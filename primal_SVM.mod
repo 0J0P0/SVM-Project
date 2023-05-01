@@ -12,6 +12,6 @@ var gamma;
 
 ## Objective function
 minimize fobj:
-	1/2 * w * w; # si no se puede hacer sumatorio
+	1/2 * sum {i in 1..m} w[i] * w[i];
 subject to c:
 	Y*(A*w + gamma * e) >= e

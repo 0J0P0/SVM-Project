@@ -2,8 +2,8 @@
 param n >= 1, integer;
 param m >= 1, integer;
 
-param e {i in 1..m};
-param y {i in 1..m};
+param e {1..m}
+param y {1..m};
 param A {1..m,1..n};
 
 ## Variables

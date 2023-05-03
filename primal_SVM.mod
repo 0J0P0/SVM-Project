@@ -1,17 +1,27 @@
-## Parameters
-param n >= 1, integer;
-param m >= 1, integer;
+##############################################################
+##					Mathematical Optimization				## 
+## 					J.P Zaldivar & E. Millán				##
+##############################################################
 
-param e {1..m}
+## Parameters
+param n >= 1, integer;	# number of rows
+param m >= 1, integer;  # number of columns
+param nu                # tradeoff
+
 param y {1..m};
 param A {1..m,1..n};
 
 ## Variables
-var w;
-var gamma;
+var w {1..m};			# (normal to the separation hyperplane)
+var s {1..m};			# slacks
+var gamma;				# intercept (location with respect to the origin)
 
 ## Objective function
-minimize fobj:
-	1/2 * sum {i in 1..m} w[i] * w[i];
-subject to c:
-	Y*(A*w + gamma * e) >= e
+minimize primal_SVM:
+	(1/2) * sum {i in 1..m} w[i]^2 + nu * sum {i in 1..m} s[i];
+
+subject to c1 {i in 1..m}
+	-y[i]*(sum {j in i..n}(A[i,j]*w[j]) + gamma) - s[i] + 1 <= 0;
+
+subject to c2 {i in 1..m}:
+	-s[i] <= 0;

@@ -1,0 +1,24 @@
+##############################################################
+##					Mathematical Optimization				## 
+## 					J.P Zaldivar & E. Millán				##
+##############################################################
+
+reset;
+##############################################################
+print "---------------SVM-Primal---------------";
+
+model primal_SVM.mod;
+data primal_SVM.dat;
+# data ./Data/train1000_8764_raw.dat;
+
+show;
+option solver cplex;
+
+
+problem PRIMAL_SVM: w, gamma, s, primal_SVM, c1, c2;
+solve PRIMAL_SVM;
+display w, gamma, s;
+##############################################################
+
+##############################################################
+

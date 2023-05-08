@@ -8,7 +8,7 @@ reset;
 print "---------------SVM-Primal---------------";
 
 model primal_SVM.mod;
-data ./Data/train1000_8764.dat;
+data ./Data/train100_8763.dat;
 
 show;
 option solver cplex;

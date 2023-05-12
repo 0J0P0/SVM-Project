@@ -16,7 +16,12 @@ option solver cplex;
 
 problem PRIMAL_SVM: w, gamma, s, primal_SVM, c1, c2;
 solve PRIMAL_SVM;
-display w, gamma, s;
+print "---------------w values---------------";
+display w;
+print "---------------s values---------------";
+display s;
+print "--------------gamma value--------------";
+display gamma;
 ##############################################################
 
 ##############################################################

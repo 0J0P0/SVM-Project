@@ -16,12 +16,14 @@ option solver cplex;
 
 problem PRIMAL_SVM: w, gamma, s, primal_SVM, c1, c2;
 solve PRIMAL_SVM;
-print "---------------w values---------------";
-display w;
-print "---------------s values---------------";
-display s;
-print "--------------gamma value--------------";
-display gamma;
+print "---------------w values---------------" > Pred/out_train100_8763.txt;
+display w > Pred/out_train100_8763.txt;
+print "---------------s values---------------" > Pred/out_train100_8763.txt;
+display s > Pred/out_train100_8763.txt;
+print "-------------gamma value--------------" > Pred/out_train100_8763.txt;
+display gamma > Pred/out_train100_8763.txt;
+print "--------------------------------------" > Pred/out_train100_8763.txt;
+display {i in 1..m} (y[i], sum {j in 1..n} w[j] * A[i,j] + gamma + y[i]*s[i]) > Pred/out_train100_8763.txt;
 ##############################################################
 
 ##############################################################

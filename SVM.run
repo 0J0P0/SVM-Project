@@ -8,7 +8,7 @@ reset;
 print "---------------SVM-Primal---------------";
 
 model primal_SVM.mod;
-data ./Data/train100_8763.dat;
+data ./Data/test100_8762.dat;
 
 show;
 option solver cplex;
@@ -16,16 +16,18 @@ option solver cplex;
 
 problem PRIMAL_SVM: w, gamma, s, primal_SVM, c1, c2;
 solve PRIMAL_SVM;
-print "---------------w values---------------" > Pred/out_p_train100_8763.txt;
-display w > Pred/out_p_train100_8763.txt;
-print "---------------s values---------------" > Pred/out_p_train100_8763.txt;
-display s > Pred/out_p_train100_8763.txt;
-print "-------------gamma value--------------" > Pred/out_p_train100_8763.txt;
-display gamma > Pred/out_p_train100_8763.txt;
-print "--------------------------------------" > Pred/out_p_train100_8763.txt;
-display {i in 1..m} (y[i], sum {j in 1..n} w[j] * A[i,j] + gamma + y[i]*s[i]) > Pred/out_p_train100_8763.txt;
+print "---------------w values---------------" > Pred/out_p_test100_8762.txt;
+display w > Pred/out_p_test100_8762.txt;
+print "---------------s values---------------" > Pred/out_p_test100_8762.txt;
+display s > Pred/out_p_test100_8762.txt;
+print "-------------gamma value--------------" > Pred/out_p_test100_8762.txt;
+display gamma > Pred/out_p_test100_8762.txt;
+print "--------------------------------------" > Pred/out_p_test100_8762.txt;
+display {i in 1..m} (y[i], sum {j in 1..n} w[j] * A[i,j] + gamma) > Pred/out_p_test100_8762.txt;
+##############################################################
 ##############################################################
 reset;
+##############################################################
 ##############################################################
 print "---------------SVM-Dual---------------";
 
@@ -38,9 +40,9 @@ option solver cplex;
 
 problem DUAL_SVM: la, dual_SVM, c1;
 solve DUAL_SVM;
-print "-------------lambda value--------------" > Pred/out_d_train100_8763.txt;
-display la > Pred/out_d_train100_8763.txt;
-print "---------------w values---------------" > Pred/out_d_train100_8763.txt;
+print "-------------lambda value--------------" > Pred/out_d_test100_8762.txt;
+display la > Pred/out_d_test100_8762.txt;
+print "---------------w values---------------" > Pred/out_d_test100_8762.txt;
 param w {1..n};
 let {j in 1..n} w[j] := sum{i in {1..m}} la[i] * y[i] * A[i,j];
-display w > Pred/out_d_train100_8763.txt;
+display w > Pred/out_d_test100_8762.txt;

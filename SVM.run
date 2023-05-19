@@ -8,8 +8,8 @@ reset;
 print "---------------SVM-Primal---------------";
 
 model primal_SVM.mod;
-data ./Data/X_test.dat;
-data ./Data/X_train.dat;
+data ./Data/bank_test.dat;
+data ./Data/bank_train.dat;
 
 show;
 option solver cplex;
@@ -18,24 +18,24 @@ option solver cplex;
 problem PRIMAL_SVM: w, gamma, s, primal_SVM, c1, c2;
 solve PRIMAL_SVM;
 
-print "---------------w values---------------" > Pred/out_p_X_train.txt;
-display w > Pred/out_p_X_train.txt;
-print "-------------gamma value--------------" > Pred/out_p_X_train.txt;
-display gamma > Pred/out_p_X_train.txt;
-print "-------------y_pred value--------------" > Pred/out_p_X_train.txt;
+print "---------------w values---------------" > Pred/out_p_bank_train.txt;
+display w > Pred/out_p_bank_train.txt;
+print "-------------gamma value--------------" > Pred/out_p_bank_train.txt;
+display gamma > Pred/out_p_bank_train.txt;
+print "-------------y_pred value--------------" > Pred/out_p_bank_train.txt;
 param y_pred {1..m_test};
 let {i in {1..m_test}} y_pred[i] := sum{j in 1..n} w[j] * A_test[i,j] + gamma;
 let {i in {1..m_test}} y_pred[i] := if y_pred[i] <= 0 then -1 else 1;
-display y_pred  > Pred/out_p_X_train.txt;
-print "---------------accuracy----------------" > Pred/out_p_X_train.txt;
+display y_pred  > Pred/out_p_bank_train.txt;
+print "---------------accuracy----------------" > Pred/out_p_bank_train.txt;
 param acc default 0;
 for {i in {1..m_test}} {
 	if y_pred[i] == y_test[i] then
 		let acc := acc + 1;
 }
-display acc / m_test *100 > Pred/out_p_X_train.txt;
-print "---------------s values---------------" > Pred/out_p_X_train.txt;
-display s > Pred/out_p_X_train.txt;
+display acc / m_test *100 > Pred/out_p_bank_train.txt;
+print "---------------s values---------------" > Pred/out_p_bank_train.txt;
+display s > Pred/out_p_bank_train.txt;
 
 ##############################################################
 ##############################################################
@@ -46,7 +46,7 @@ reset;
 print "---------------SVM-Dual---------------";
 
 model dual_SVM.mod;
-data ./Data/X_train.dat;
+data ./Data/bank_train.dat;
 
 show;
 option solver cplex;
@@ -55,11 +55,11 @@ option solver cplex;
 problem DUAL_SVM: la, dual_SVM, c1;
 solve DUAL_SVM;
 
-print "---------------w values---------------" > Pred/out_d_X_train.txt;
+print "---------------w values---------------" > Pred/out_d_bank_train.txt;
 param w {1..n};
 let {j in 1..n} w[j] := sum{i in 1..m_train} la[i] * y_train[i] * A_train[i,j];
-display w > Pred/out_d_X_train.txt;
-print "-------------lambda value--------------" > Pred/out_d_X_train.txt;
-display la > Pred/out_d_X_train.txt;
+display w > Pred/out_d_bank_train.txt;
+print "-------------lambda value--------------" > Pred/out_d_bank_train.txt;
+display la > Pred/out_d_bank_train.txt;
 
 

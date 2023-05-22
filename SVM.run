@@ -97,12 +97,6 @@ option solver cplex;
 problem DUAL_SVM_KERNEL: la, dual_SVM_kernel, c1_kernel;
 solve DUAL_SVM_KERNEL;
 
-/*
-param w {1..n};
-let {j in 1..n} w[j] := sum{i in 1..m_train} la[i] * y_train[i] * A_train[i,j];
-display w > Pred/out_d_X_train.txt;
-*/
-
 param gamma;
 param i default 1;
 param found default 0;
@@ -116,8 +110,7 @@ let gamma := 1/y_train[i] - sum {j in 1..n} la[j] * y_train[j] * exp(-(1/n * (su
 display gamma > Pred/out_dk_X_train.txt;
 
 param y_pred {1..m_test};
-# ??? y_test
-let {t in 1..m_test} y_pred[t] := sum {j in 1..m_test} la[j] * y_test[j] * exp(-(1/n * (sum{k in 1..n} (A_test[t,k] - A_test[j,k])^2))) + gamma;
+let {t in 1..m_test} y_pred[t] := sum {j in 1..m_train} la[j] * y_train[j] * exp(-(1/n * (sum{k in 1..n} (A_train[j,k] - A_test[t,k])^2))) + gamma;
 let {t in 1..m_test} y_pred[t] := if y_pred[t] <= 0 then -1 else 1;
 display y_pred  > Pred/out_dk_X_train.txt;
 

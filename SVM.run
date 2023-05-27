@@ -122,3 +122,5 @@ for {t in {1..m_test}} {
 display acc / m_test *100 > Pred/out_dk_X_train.txt;
 
 display la > Pred/out_dk_X_train.txt;
+
+

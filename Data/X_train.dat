@@ -5,7 +5,7 @@
 
 param m_train := 1000;
 param n := 3;
-param nu := 0.9;
+param nu := 1;
 
 param y_train :=
 1	-1

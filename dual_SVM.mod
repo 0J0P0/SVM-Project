@@ -20,14 +20,14 @@ var la {1..m_train} >= 0, <= nu;
 
 ## Objective function
 minimize dual_SVM:
-	1/2 * (sum {i in 1..m_train, j in 1..m_train} la[i] * y_train[i] * la[j] * y_train[j] * sum{k in 1..n} A_train[i,k] * A_train[j,k]) - (sum {i in 1..m_train} la[i]); 
+	(1/2) * (sum {i in 1..m_train, j in 1..m_train} la[i] * y_train[i] * la[j] * y_train[j] * sum{k in 1..n} A_train[i,k] * A_train[j,k]) - (sum {i in 1..m_train} la[i]); 
 
 subject to c1:
 	sum {i in 1..m_train} la[i] * y_train[i] = 0;
 	
 
 minimize dual_SVM_kernel:
-	1/2 * (sum {i in 1..m_train, j in 1..m_train} la[i] * y_train[i] * la[j] * y_train[j] * exp(-(1/n * (sum{k in 1..n} (A_train[i,k] - A_train[j,k])^2)))) - (sum {i in 1..m_train} la[i]); 
+	(1/2) * (sum {i in 1..m_train, j in 1..m_train} la[i] * y_train[i] * la[j] * y_train[j] * exp(-(1/n * (sum{k in 1..n} (A_train[i,k] - A_train[j,k])^2)))) - (sum {i in 1..m_train} la[i]); 
 
 subject to c1_kernel:
 	sum {i in 1..m_train} la[i] * y_train[i] = 0;
